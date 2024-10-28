@@ -1,0 +1,10 @@
+[Unit]
+Description=start script for moproxy
+
+[Service]
+Type=oneshot
+ExecStart=/bin/moproxy --port 8118 --socks5 127.0.0.1:9050 
+
+[Install]
+WantedBy = multi-user.target
+

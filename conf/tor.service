@@ -1,0 +1,25 @@
+# This service is actually a systemd target,
+# but we are using a service since targets cannot be reloaded.
+
+[Unit]
+Description=Anonymizing overlay network for TCP (multi-instance-master)
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+## added by noone.
+ExecStartPre=/usr/local/bin/xr stop iptables
+
+ExecStart=/bin/true
+ExecReload=/bin/true
+
+## added by noone.
+ExecStartPost=/bin/bash -c 'sleep 30; /usr/local/bin/xr start iptables'
+Restart=on-failure
+RestartSec=15
+ExecStopPost=/usr/local/bin/xr stop iptables
+
+
+[Install]
+WantedBy=multi-user.target
+
